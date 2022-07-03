@@ -1,0 +1,7 @@
+
+
+spring:
+  jackson:
+    deserialization:
+      # Don't allow unknown properties in request body
+      fail-on-unknown-properties: true

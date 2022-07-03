@@ -11,5 +11,5 @@ public enum PhoneAction {
     SUSPEND("Suspend"),
     TERMINATE("Terminate");
 
-    private String action;
+    private final String action;
 }

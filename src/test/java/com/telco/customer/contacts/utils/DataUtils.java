@@ -17,4 +17,5 @@ public class DataUtils {
         return Customer.builder().customerId("customer-" + id).firstName("firstName1").lastName("lastName1")
                 .phones(Collections.singletonList(createPhoneByIdWithRandomData(id))).build();
     }
+
 }

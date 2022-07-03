@@ -39,14 +39,14 @@ public class PhonesController {
 
     @PatchMapping("/phones/{phoneId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePhoneStatus(@PathVariable("phoneId") @NotBlank @Size(min = 1, max = 50) String phoneId, @Valid @RequestBody PatchPhoneStatusRequest phoneStatusRequest) {
+    public void updatePhoneStatus(@PathVariable("phoneId") @NotBlank @Size(min = 2, max = 50) String phoneId, @Valid @RequestBody PatchPhoneStatusRequest phoneStatusRequest) {
         log.info("message=\"Patching phone {} with new status {}\"", phoneId, phoneStatusRequest.getAction());
         customerPhonesRepository.updatePhoneStatus(phoneId, phoneStatusRequest);
     }
 
     @GetMapping("/customers/{customerId}/phones")
     @ResponseStatus(HttpStatus.OK)
-    public List<Phone> getAllPhonesByCustomer(@Valid @PathVariable @NotBlank @Size(min = 1, max = 50) String customerId) {
+    public List<Phone> getAllPhonesByCustomer(@Valid @PathVariable @NotBlank @Size(min = 2, max = 50) String customerId) {
         log.info("message=\"Retrieving phones by customer {}\"", customerId);
         return customerPhonesRepository.getAllPhonesByCustomer(customerId);
     }

@@ -4,11 +4,9 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
-import com.telco.customer.contacts.model.Customer;
 import com.telco.customer.contacts.model.Phone;
 import com.telco.customer.contacts.model.PhoneStatus;
 import com.telco.customer.contacts.repository.CustomerPhonesRepository;
-import com.telco.customer.contacts.utils.DataUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -38,9 +36,10 @@ class CustomerContactsServiceApplicationTests {
     @Autowired
     CustomerPhonesRepository customerPhonesRepository;
 
-    Customer customer1 = DataUtils.createCustomerByIdWithRandomData("1");
-    Customer customer2 = DataUtils.createCustomerByIdWithRandomData("2");
-    String phoneId1 = customer1.getPhones().get(0).getPhoneId();
+    //Customer and phone Ids from pre-initialised datastore.
+    String customer1 = "customer-1";
+    String phoneId1 = "phone-1";
+
 
     @BeforeEach()
     public void setup() {
@@ -54,8 +53,6 @@ class CustomerContactsServiceApplicationTests {
     @Test
     @Order(0)
     public void getPhonesApi_whenRequestIsValid_shouldReturnAllPhones() {
-        customerPhonesRepository.saveCustomer(customer1);
-        customerPhonesRepository.saveCustomer(customer2);
 
         Phone[] phones = given()
                 .contentType(ContentType.JSON)
@@ -168,7 +165,7 @@ class CustomerContactsServiceApplicationTests {
         given()
                 .contentType(ContentType.TEXT)
                 .when()
-                .get(String.format("/customers/%s/phones", customer1.getCustomerId()))
+                .get(String.format("/customers/%s/phones", customer1))
                 .then()
                 .statusCode(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE);
 
@@ -203,7 +200,7 @@ class CustomerContactsServiceApplicationTests {
         Phone[] phones = given()
                 .contentType(ContentType.JSON)
                 .when()
-                .get(String.format("/customers/%s/phones", customer1.getCustomerId()))
+                .get(String.format("/customers/%s/phones", customer1))
                 .as(Phone[].class);
         assertEquals(1, phones.length);
     }

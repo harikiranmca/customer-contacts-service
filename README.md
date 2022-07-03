@@ -12,7 +12,8 @@ A simple RESTful microservice with in-memory datastore.
 
 ## Design Notes
 
-* Service is built using Spring Boot and uses base path as `/api/v1`.
+* Service is built using Spring Boot and uses base path as `/api/v1`.*
+* Swagger file can be found [here](./api/contacts-api.v1.yml)
 * APIs are designed using RESTful guidelines.
 * Minimalistic validations are used for demonstration purpose. 
 * Service layer is not used as business rules are minimal for this use-case. 

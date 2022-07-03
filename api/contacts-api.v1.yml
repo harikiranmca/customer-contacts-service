@@ -1,0 +1,225 @@
+openapi: 3.0.0
+servers:
+  - url: https://telco.com.au/api/v1
+info:
+  version: "v1.0"
+  title: Customer Contacts Service
+  description: >-
+    A simple RESTful microservice to manipualte customer contacts.
+  contact:
+    name: Harikiran challa
+  license:
+    name: "Private"
+
+paths:
+  /phones:
+    get:
+      summary: Retrieve all phones
+      tags:
+        - Phones
+      description: >-
+        Returns all the phones
+      parameters:
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        415:
+          description: Unsupported Media type. Only supports application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Something went wrong. Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /phones/{phoneId}:
+    patch:
+      summary: Update phone status
+      tags:
+        - Phones
+      description: >-
+        Updates phone status to the requested state
+      parameters:
+        - $ref: '#/components/parameters/PhoneId'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        204:
+          description: Updated successfully.
+
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Phone Id not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        415:
+          description: Unsupported Media type. Only supports application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Something went wrong. Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    options:
+      summary: Options api for cors
+      tags:
+        - Phones
+      description: >-
+        Options api for cors
+      parameters:
+        - $ref: '#/components/parameters/PhoneId'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        204:
+          description: Updated successfully.
+
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Phone Id not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        415:
+          description: Unsupported Media type. Only supports application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Something went wrong. Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /customers/{customerId}/phones:
+    get:
+      summary: Retrieve all phones by customer
+      tags:
+        - Phones
+      description: >-
+        Returns all the phones by given customer id
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        415:
+          description: Unsupported Media type. Only supports application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Something went wrong. Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Phone:
+      type: array
+      items:
+        properties:
+          phoneId:
+            type: string
+          countryCode:
+            type: string
+          number:
+            type: string
+          status:
+            type: string
+            enum:
+              - CREATED
+              - ACTIVATED
+              - SUSPENDED
+              - TERMINATED
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        timestamp:
+          type: string
+        path:
+          type: string
+  parameters:
+    CorrelationId:
+      name: x-correlation-id
+      in: header
+      description:  UUID for tracking the request
+      required: false
+      schema:
+        type: string
+    PhoneId:
+      name: phoneId
+      in: path
+      description:  unique phone id
+      required: true
+      schema:
+        type: string
+        minimum: 2
+        maximum: 50
+    CustomerId:
+      name: customerId
+      in: path
+      description:  unique customer id
+      required: true
+      schema:
+        type: string
+        minimum: 2
+        maximum: 50

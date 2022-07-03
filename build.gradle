@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.telco'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '17'
 
 repositories {
@@ -14,14 +14,19 @@ repositories {
 }
 
 dependencies {
+    //Lombok annotation Processing libs
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
+    //Spring boot related libs
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
 
+    //Validation related libs
+    implementation 'javax.validation:validation-api:2.0.0.Final'
+
+    //Test related libs
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.jayway.restassured:rest-assured:2.9.0'
 

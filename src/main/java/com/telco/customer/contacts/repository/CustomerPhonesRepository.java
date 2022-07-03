@@ -56,12 +56,4 @@ public class CustomerPhonesRepository {
         CUSTOMER_PHONES_DB.add(customer);
         return customer;
     }
-
-//    @PostConstruct
-//    public void setupData() {
-//        Phone phone = Phone.builder().phoneId("some-uuid").countryCode("61").number("123456789").status(PhoneStatus.CREATED).build();
-//        List<Phone> phones = new ArrayList<>();
-//        phones.add(phone);
-//        this.saveCustomer(Customer.builder().firstName("Customer 1 first name").lastName("Customer 2 last name").phones(phones).build());
-//    }
 }

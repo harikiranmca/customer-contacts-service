@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Slf4j
 @RestController
+@Validated
 @AllArgsConstructor
 @RequestMapping(value = "/api/v1", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 public class PhonesController {
@@ -35,14 +39,14 @@ public class PhonesController {
 
     @PatchMapping("/phones/{phoneId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePhoneStatus(@PathVariable String phoneId, @Valid @RequestBody PatchPhoneStatusRequest phoneStatusRequest) {
+    public void updatePhoneStatus(@PathVariable("phoneId") @NotBlank @Size(min = 1, max = 50) String phoneId, @Valid @RequestBody PatchPhoneStatusRequest phoneStatusRequest) {
         log.info("message=\"Patching phone {} with new status {}\"", phoneId, phoneStatusRequest.getAction());
         customerPhonesRepository.updatePhoneStatus(phoneId, phoneStatusRequest);
     }
 
     @GetMapping("/customers/{customerId}/phones")
     @ResponseStatus(HttpStatus.OK)
-    public List<Phone> getAllPhonesByCustomer(@PathVariable String customerId) {
+    public List<Phone> getAllPhonesByCustomer(@Valid @PathVariable @NotBlank @Size(min = 1, max = 50) String customerId) {
         log.info("message=\"Retrieving phones by customer {}\"", customerId);
         return customerPhonesRepository.getAllPhonesByCustomer(customerId);
     }

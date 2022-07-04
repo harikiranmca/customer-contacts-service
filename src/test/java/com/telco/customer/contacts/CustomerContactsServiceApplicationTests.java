@@ -6,14 +6,12 @@ import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.telco.customer.contacts.model.Phone;
 import com.telco.customer.contacts.model.PhoneStatus;
-import com.telco.customer.contacts.repository.CustomerPhonesRepository;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
@@ -24,7 +22,6 @@ import java.util.Map;
 import static com.jayway.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("integration")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CustomerContactsServiceApplicationTests {
@@ -32,9 +29,6 @@ class CustomerContactsServiceApplicationTests {
 
     @LocalServerPort
     private int port;
-
-    @Autowired
-    CustomerPhonesRepository customerPhonesRepository;
 
     //Customer and phone Ids from pre-initialised datastore.
     String customer1 = "customer-1";
